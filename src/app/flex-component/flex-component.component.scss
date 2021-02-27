@@ -1,0 +1,13 @@
+.display-flex {
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+
+.left,
+.middle,
+.right {
+  margin-right: 1rem;
+}
+

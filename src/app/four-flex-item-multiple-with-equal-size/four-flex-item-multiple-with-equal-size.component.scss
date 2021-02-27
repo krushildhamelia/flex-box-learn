@@ -1,0 +1,53 @@
+// here things to note
+// size required by the item to display properly is 20rem = 200px
+// we are displaying 4 items per row when the width is availble and 4 items can occupy that i.e > (200px * 4) + 4rem (margin) > 840px
+// we want the flex-box to arrange according 4 items, 3 items, 2 items and at-most items per rows as per the space available...
+// we need a media-query to change the flex property to flex-grow 1 when the available size of the window is (20rem * 2 + 2rem) = (400px + 2rem) = 420px + 4rem = 460px (some delta (this can vary as per design)) i.e for 1 item... i.e two items cannot be accommodated here so converting into single item per row
+
+// delta check:: consider margins from other elements like body, parent and others (do not forget to check the item's margin itself XD) and add some of your own value or just do a random 50px addition
+
+$one-third: 460px; // 460px // rem does not work here for media queries
+$half: 630px;
+$full: 1260px;
+
+@mixin responsive($point) {
+
+  $resp-one-third: "(max-width: #{$one-third})";
+  $resp-half: "(max-width: #{$half})";
+  $resp-full: "(min-width: #{$full})";
+
+  @if $point == one-third {
+    @media #{$resp-one-third} { @content; }
+  }
+  @else if $point == half {
+    @media #{$resp-half} { @content; }
+  }
+  @else if $point == full {
+    @media #{$resp-full}  { @content; }
+  }
+
+}
+
+.four-item-with-equal-size {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between; // as there are only two items and this property suits better with some space between each items
+
+  app-flex-component {
+    flex: 0 calc(25% - 2rem); // flex: [flex-grow] [flex-shrink] [flex-basis] // flex-basis indicates only 4 items should be allowed at max as per spacing per items
+    // flex-grow is made 0 here so that only flex-basis property is set or can use
+    // flex-basis: calc(50% - 4rem); //same property without combo
+    margin-right: 1rem;
+    width: calc(25% - 4rem); // 50% = 4 parts and -4rem because both the elements have margin-right which needs to be subtracted to allow components side-by-side else it would flow below one another
+    min-width: 20rem; // this should be the size by which the component displays visually correct and provides better UX... This is needs to allow the components to stack below in case adequate space is not available
+
+    @include responsive(one-third) {
+      flex: 1;
+    }
+  }
+}
+
+// Note:: at the window size of 458px the media query of one-third will apply so the design might get un appropriate at this particular size reducing the 460px to 452px will suffice our design as of now...
+// $one-third: 452px; // 460px // rem does not work here for media queries...
+// But note... we are supportting multiple devices using media-query and not the resizing of windows in desktop browser...
+// it is still usable... Do not focus on such things until the client is aggressively demanding this kind of stuffs.... Take time for this and avoid such clients😜😜

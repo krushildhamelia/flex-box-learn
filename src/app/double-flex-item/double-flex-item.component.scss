@@ -1,0 +1,23 @@
+.double-item {
+  display: flex;
+  flex-flow: row wrap;
+
+  app-flex-component {
+    flex: 1 calc(50% - 2rem); // flex: [flex-grow] [flex-shrink] [flex-basis] // flex-basis indicates only 2 items should be allowed at max as per spacing per items
+    margin-right: 1rem;
+    width: calc(50% - 2rem); // 50% = 2 parts and -2rem because both the elements have margin-right which needs to be subtracted to allow components side-by-side else it would flow below one another
+    min-width: 20rem; // this should be the size by which the component displays visually correct and provides better UX... This is needs to allow the components to stack below in case adequate space is not available
+  }
+}
+
+.double-item-without-margin {
+  display: flex;
+  flex-flow: row wrap;
+
+  app-flex-component {
+    flex: 1 50%; // flex: [flex-grow] [flex-shrink] [flex-basis] // flex-basis indicates only 2 items should be allowed at max as per spacing per items
+    width: 50%; // 50% = 2 parts to allow components side-by-side else it would flow below one another
+    min-width: 20rem; // this should be the size by which the component displays visually correct and provides better UX... This is needs to allow the components to stack below in case adequate space is not available
+  }
+}
+
